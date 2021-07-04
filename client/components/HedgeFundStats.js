@@ -14,10 +14,11 @@ export class HedgeFundStats extends React.Component {
     // console.log(avgPortfolio)
     if (!this.props.loading) {
       return (
-        <div className="hedgeFundsContainer">
-          <div className="singleHedgeFundContainer">
-            <div className="hedgeFundReturnsContainer">
-              <div className="singleReturnContainer">
+        <div id="fundStatsWholeComponent">
+          <h2 className="title">Hedge Funds</h2>
+          <div className="hedgeFundStatsContainer">
+            <div className="hedgeFundStatsBox">
+              <div className="singleStatContainer">
                 <div className="yearReturnLabel">
                   <p>Average # of Stocks</p>
                 </div>
@@ -25,18 +26,51 @@ export class HedgeFundStats extends React.Component {
                   <p>{`${this.props.hedgeStats.avgNumberOfStocks}`}</p>
                 </div>
               </div>
-              <div className="singleReturnContainer">
+              <div className="singleStatContainer">
                 <div className="yearReturnLabel">
-                  <p>Portfolio Size $</p>
+                  <p>Average 1 Year Return </p>
                 </div>
                 <div className="yearReturnNumber">
                   <p>{`${(
-                    Number(this.props.hedgeStats.avgPortfolioAmount) /
-                    1000000000
-                  ).toFixed(2)}`}</p>
+                    this.props.hedgeStats.avgOneYearReturn * 100 -
+                    100
+                  ).toFixed(1)}`}</p>
                 </div>
               </div>
-              <div className="singleReturnContainer">
+              <div className="singleStatContainer">
+                <div className="yearReturnLabel">
+                  <p>Average 3 Year Return </p>
+                </div>
+                <div className="yearReturnNumber">
+                  <p>{`${(
+                    this.props.hedgeStats.avgThreeYearReturn * 100 -
+                    100
+                  ).toFixed(1)}`}</p>
+                </div>
+              </div>
+              <div className="singleStatContainer">
+                <div className="yearReturnLabel">
+                  <p>Average 5 Year Return </p>
+                </div>
+                <div className="yearReturnNumber">
+                  <p>{`${(
+                    this.props.hedgeStats.avgFiveYearReturn * 100 -
+                    100
+                  ).toFixed(1)}`}</p>
+                </div>
+              </div>
+              <div className="singleStatContainer">
+                <div className="yearReturnLabel">
+                  <p>Average Max Return </p>
+                </div>
+                <div className="yearReturnNumber">
+                  <p>{`${(
+                    this.props.hedgeStats.avgMaxReturn * 100 -
+                    100
+                  ).toFixed(1)}`}</p>
+                </div>
+              </div>
+              <div className="singleStatContainer">
                 <div className="yearReturnLabel">
                   <p>Average Beta</p>
                 </div>

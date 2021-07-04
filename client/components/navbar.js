@@ -55,55 +55,53 @@ function goBlackColor(el) {
 export const Navbar = () => (
   <div>
     <nav id="nav-bar">
-      <div>
-        <a href="/">
-          <img
-            id="Nav-Logo"
-            onMouseOver={() => getRandomLogo()}
-            onMouseOut={() => goBlackLogo()}
-            src={
-              process.env.PORT
-                ? process.env.PORT + '/images/HedgeHog-Logo-Black.png'
-                : '/images/HedgeHog-Logo-Black.png'
-            }
-            alt="Turqoise Hog"
-          ></img>
-        </a>
-      </div>
-      <div>
-        <Link
-          className="nav-bar-link"
-          id="hedgeFundsNavLink"
-          to="/hedgefunds"
-          onMouseOver={(el) => getRandomColor(el)}
-          onMouseOut={(el) => goBlackColor(el)}
-        >
-          Hedgefunds
-        </Link>
-        <div className="geeks" />
-      </div>
-      <div>
-        <Link
-          className="nav-bar-link"
-          id="methodologyNavLink"
-          to="/methodology"
-          onMouseOver={(el) => getRandomColor(el)}
-          onMouseOut={(el) => goBlackColor(el)}
-        >
-          Methodology
-        </Link>
-      </div>
-      <div>
-        <Link
-          className="nav-bar-link"
-          id="aboutNavLink"
-          to="/about"
-          onMouseOver={(el) => getRandomColor(el)}
-          onMouseOut={(el) => goBlackColor(el)}
-        >
-          About
-        </Link>
-      </div>
+      <a href="/" id="nav-logo-box">
+        <img
+          id="Nav-Logo"
+          onMouseOver={() => getRandomLogo()}
+          onMouseOut={() => goBlackLogo()}
+          src={
+            process.env.PORT
+              ? process.env.PORT + '/images/HedgeHog-Logo-Black.png'
+              : '/images/HedgeHog-Logo-Black.png'
+          }
+          alt="Turqoise Hog"
+        ></img>
+      </a>
+      {/* <div> */}
+      <Link
+        className="nav-bar-link"
+        id="hedgeFundsNavLink"
+        to="/hedgefunds"
+        onMouseOver={(el) => getRandomColor(el)}
+        onMouseOut={(el) => goBlackColor(el)}
+      >
+        Hedgefunds
+      </Link>
+      <div className="geeks" />
+      {/* </div> */}
+      {/* <div> */}
+      <Link
+        className="nav-bar-link"
+        id="methodologyNavLink"
+        to="/methodology"
+        onMouseOver={(el) => getRandomColor(el)}
+        onMouseOut={(el) => goBlackColor(el)}
+      >
+        Methodology
+      </Link>
+      {/* </div> */}
+      {/* <div> */}
+      <Link
+        className="nav-bar-link"
+        id="aboutNavLink"
+        to="/about"
+        onMouseOver={(el) => getRandomColor(el)}
+        onMouseOut={(el) => goBlackColor(el)}
+      >
+        About
+      </Link>
+      {/* </div> */}
     </nav>
   </div>
 )

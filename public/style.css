@@ -133,8 +133,33 @@ select:hover {
 .hedgeFundsContainer {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 850px;
   border-radius: 15px;
+}
+
+.title {
+  /* margin: 0; */
+  margin-bottom: 10px;
+  margin-top: 10px;
+  /* text-align: center; */
+}
+
+.hedgeFundStatsContainer {
+  display: flex;
+  /* height: 15%; */
+  border-radius: 15px;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.65);
+  margin-bottom: 4px;
+  font-size: 6px;
+  width: 780px;
+  margin-left: 35px;
+}
+
+#fundStatsWholeComponent {
+  margin-bottom: 30px;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
 }
 
 .singleHedgeFundContainer {
@@ -153,15 +178,19 @@ select:hover {
 }
 
 .hedgeFundName {
-  width: 70%;
+  width: 40%;
   display: flex;
-  padding-left: 5px;
+  padding-left: 9px;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
 }
 
-.hedgeFundName p {
-  font-size: 13px;
-  padding: 6px 5px 5px 5px;
-}
+/* .hedgeFundName p {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 12px;
+} */
 
 .hedgeFundHog {
   height: 32px;
@@ -172,32 +201,62 @@ select:hover {
 
 .hedgeFundReturnsContainer {
   display: flex;
-  width: 50%;
-  padding: 0px;
+  align-items: center;
+  width: 60%;
+}
+
+.hedgeFundStatsBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 100%; */
+  /* width: 1200px; */
 }
 
 .hedgeFundReturnsContainer p {
-  padding-top: 8px;
+  /* padding-top: 8px; */
   font-size: 8px;
 }
 
 .hedgeFundReturnsContainer .assetsReturn {
-  padding-top: 8px;
+  /* padding-top: 8px; */
   font-size: 8px;
 }
 
 .singleReturnContainer {
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   display: flex;
-  padding: 6px 0px 0px 0px;
+  /* padding: 6px 0px 0px 0px; */
   align-items: center;
+  padding-left: 10px;
   width: 85px;
+  flex-direction: column;
+}
+
+.singleStatContainer {
+  /* flex-wrap: wrap; */
+  display: flex;
+  /* padding: 6px 0px 0px 0px; */
+  align-items: center;
+  padding-left: 10px;
+  width: 120px;
+  flex-direction: column;
 }
 
 .yearReturnLabel p {
-  font-size: 11px;
-  margin-right: 3px;
+  font-size: 10px;
+  margin: 0px;
+  font-weight: 600;
+  text-align: center;
+  /* margin-right: 3px; */
   color: rgb(157, 97, 255);
+}
+
+.yearReturnNumber p {
+  font-size: 11px;
+  margin: 0px;
+  /* margin-right: 3px; */
+  /* color: rgb(157, 97, 255); */
 }
 
 /* VICTORY LINE CHART STYLING */
@@ -352,12 +411,21 @@ tr:nth-child(even) {
 }
 
 #Nav-Logo {
-  height: 100%;
+  /* height: 90%; */
   width: 200px;
-  border-radius: 15px;
-  padding: 0.2rem;
-  margin: 0.3rem;
+  /* padding: 1.5px;
+  margin: 1.5px; */
+  margin-right: 100px;
+  /* padding-bottom: 20px; */
   transition: all 0.2s ease-in-out;
+}
+
+#nav-logo-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 6px;
 }
 
 #Nav-Logo:hover {
@@ -372,14 +440,16 @@ tr:nth-child(even) {
 }
 
 .nav-bar-link {
-  padding: 0.6rem;
-  margin-top: 1.3rem;
-  margin-left: 3.1rem;
   text-decoration: none;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   color: black;
+  width: 190px;
+  margin-top: 5px;
   font-size: 18px;
   transition: all 0.2s ease-in-out;
+  font-weight: 600;
 }
 
 .all-hedgefunds-page {
@@ -387,11 +457,16 @@ tr:nth-child(even) {
   margin-top: 110px;
 }
 
+.single-hedgefunds-page {
+  margin-top: 110px;
+}
+
 #left-half-hedgefunds-page {
   display: flex;
+  flex-direction: column;
   left: 0;
   width: 70%;
-  margin-left: 30px;
+  margin-left: 20px;
 }
 
 #right-half-hedgefunds-page {
@@ -448,4 +523,9 @@ nav a:hover {
   100% {
     left: 100%;
   }
+} */
+
+/* #growth {
+ ...
+ overflow-y: scroll;
 } */
