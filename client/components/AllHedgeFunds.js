@@ -6,15 +6,6 @@ import {sortHedgeFunds, camelCase} from './utilities'
 import SortedHedgeFunds from './SortedHedgeFunds'
 import {Link} from 'react-scroll'
 import history from '../history'
-// import {useHistory} from 'react-router-dom'
-// import {useNavigate} from 'react-router-dom'
-// const navigate = useNavigate()
-// navigate('/home')
-
-// const history = useHistory()
-// const clickHedgeFund = useCallback(() => history.push('/sample'), [history])
-
-// const history = useHistory()
 
 class AllHedgeFunds extends React.Component {
   constructor() {
@@ -25,14 +16,14 @@ class AllHedgeFunds extends React.Component {
       hedgeFundsPerPage: 5,
     }
     this.updateSort = this.updateSort.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    // this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(event) {
-    this.setState({
-      currentPage: Number(event.target.id),
-    })
-  }
+  // handleClick(event) {
+  //   this.setState({
+  //     currentPage: Number(event.target.id),
+  //   })
+  // }
 
   clickHedgeFund(hedgeFundId) {
     history.push(`hedgefunds/${hedgeFundId}`)
@@ -40,6 +31,7 @@ class AllHedgeFunds extends React.Component {
 
   updateSort(event) {
     this.setState({sort: event.target.value})
+    console.log('hello', this.state.sort, event.target.value)
   }
 
   render() {
@@ -73,176 +65,210 @@ class AllHedgeFunds extends React.Component {
     //   )
     // })
 
-    if (this.state.sort !== 'none') {
-      hedgeFunds = sortHedgeFunds(hedgeFunds, this.state.sort).reverse()
-    }
+    // if (this.state.sort !== 'none') {
+    //   hedgeFunds = sortHedgeFunds(hedgeFunds, this.state.sort).reverse()
+    // }
 
     let currentHedgeFunds = hedgeFunds.slice(
       indexOfFirstHedge,
       indexOfLastHedge
     )
 
-    console.log(currentHedgeFunds[0], 'HERE')
     if (this.props.hedgeFunds.length) {
       return (
-        <div>
-          <div>
-            <div id="hedgefunds-container">
-              <div>
-                <select
-                  name="sort"
-                  id="return"
-                  onChange={this.updateSort}
-                  className="sort"
-                >
-                  <option id="none" value="none" defaultValue="none">
-                    Sort by: Return %
-                  </option>
-                  <option id="1Year" value="1Year">
-                    Sort by: 1 Year Return
-                  </option>
-                  <option id="3Year" value="3Year">
-                    Sort by: 3 Year Return
-                  </option>
-                  <option id="5Year" value="5Year">
-                    Sort by: 5 Year Return
-                  </option>
-                </select>
-              </div>
-              <div className="hedgeFundsContainer">
-                {currentHedgeFunds.map((hedgeFund, index) => {
-                  let portfolioValue =
-                    currentHedgeFunds[index].thirteenFs[0].portfolioValue
-                  let amntIndicator
-                  if (portfolioValue > 1000000000) {
-                    portfolioValue = portfolioValue / 1000000000
-                    portfolioValue = round(portfolioValue, 1)
-                    amntIndicator = 'B'
-                  } else {
-                    portfolioValue = portfolioValue / 1000000
-                    portfolioValue = round(portfolioValue, 0)
-                    amntIndicator = 'M'
-                  }
-
+        <div id="hedgefunds-container" className="growth">
+          <div className="sort-bar">
+            <select
+              name="sort"
+              id="return"
+              onChange={this.updateSort}
+              className="sort"
+            >
+              <option id="none" value="none" defaultValue="none">
+                Sorted by nothing
+              </option>
+              <option id="numberOfStocks" value="numberOfStocks">
+                Sorted by Number of Stocks
+              </option>
+              <option id="yearOneReturn" value="yearOneReturn">
+                Sorted by 1 Year Return
+              </option>
+              <option id="yearThreeReturn" value="yearThreeReturn">
+                Sorted by 3 Year Return
+              </option>
+              <option id="yearFiveReturn" value="yearFiveReturn">
+                Sorted by 5 Year Return
+              </option>
+              <option id="maxReturn" value="maxReturn">
+                Sorted by Total Return
+              </option>
+              <option id="portfolioValue" value="portfolioValue">
+                Sorted by Portfolio Value
+              </option>
+              <option id="thirteenFBeta" value="thirteenFBeta">
+                Sorted by Beta
+              </option>
+            </select>
+          </div>
+          <div className="hedgeFundsContainer">
+            {currentHedgeFunds
+              .sort((a, b) => {
+                if (this.state.sort === 'maxReturn') {
                   return (
-                    <div
-                      onClick={() => {
-                        this.clickHedgeFund(hedgeFund.id)
-                        // document.getElementsByClassName('Link')[0].click()
-                      }}
-                      href="#anchor-name"
-                      className="singleHedgeFundContainer"
-                      key={hedgeFund.id}
-                    >
-                      {/* <div className="hedgeFundName"> */}
-                      <p className="hedgeFundName">
-                        {camelCase(hedgeFund.name)}
-                      </p>
-                      {/* <div>{moveHedgeHogToState(hedgeFund.id)}</div> */}
-                      {/* </div> */}
-                      <div className="hedgeFundReturnsContainer">
-                        <div className="singleReturnContainer">
-                          <div className="yearReturnLabel">
-                            <p># of Stocks</p>
-                          </div>
-                          <div className="yearReturnNumber">
-                            <p>
-                              {
-                                currentHedgeFunds[index].thirteenFs[0]
-                                  .numberOfStocks
-                              }
-                            </p>
-                          </div>
+                    Number(b[this.state.sort].slice(6)) -
+                    Number(a[this.state.sort].slice(6))
+                  )
+                } else if (this.state.sort === 'numberOfStocks') {
+                  let indexOfA = currentHedgeFunds.indexOf(a)
+                  let indexOfB = currentHedgeFunds.indexOf(b)
+                  return (
+                    currentHedgeFunds[indexOfB].thirteenFs[0].numberOfStocks -
+                    currentHedgeFunds[indexOfA].thirteenFs[0].numberOfStocks
+                  )
+                } else if (this.state.sort === 'portfolioValue') {
+                  let indexOfA = currentHedgeFunds.indexOf(a)
+                  let indexOfB = currentHedgeFunds.indexOf(b)
+                  return (
+                    currentHedgeFunds[indexOfB].thirteenFs[0].portfolioValue -
+                    currentHedgeFunds[indexOfA].thirteenFs[0].portfolioValue
+                  )
+                } else if (this.state.sort === 'thirteenFBeta') {
+                  let indexOfA = currentHedgeFunds.indexOf(a)
+                  let indexOfB = currentHedgeFunds.indexOf(b)
+                  return (
+                    currentHedgeFunds[indexOfB].thirteenFs[0].thirteenFBeta -
+                    currentHedgeFunds[indexOfA].thirteenFs[0].thirteenFBeta
+                  )
+                }
+                return b[this.state.sort] - a[this.state.sort]
+              })
+              .map((hedgeFund, index) => {
+                let portfolioValue =
+                  currentHedgeFunds[index].thirteenFs[0].portfolioValue
+                let amntIndicator
+                if (portfolioValue > 1000000000) {
+                  portfolioValue = portfolioValue / 1000000000
+                  portfolioValue = round(portfolioValue, 1)
+                  amntIndicator = 'B'
+                } else {
+                  portfolioValue = portfolioValue / 1000000
+                  portfolioValue = round(portfolioValue, 0)
+                  amntIndicator = 'M'
+                }
+
+                return (
+                  <div
+                    onClick={() => {
+                      this.clickHedgeFund(hedgeFund.id)
+                      // document.getElementsByClassName('Link')[0].click()
+                    }}
+                    href="#anchor-name"
+                    className="singleHedgeFundContainer"
+                    key={hedgeFund.id}
+                  >
+                    {/* <div className="hedgeFundName"> */}
+                    <p className="hedgeFundName">{camelCase(hedgeFund.name)}</p>
+                    {/* <div>{moveHedgeHogToState(hedgeFund.id)}</div> */}
+                    {/* </div> */}
+                    <div className="hedgeFundReturnsContainer">
+                      <div className="singleReturnContainer">
+                        <div className="yearReturnLabel">
+                          <p># of Stocks</p>
                         </div>
-                        <div className="singleReturnContainer">
-                          <div className="yearReturnLabel">
-                            <p>1 Yr Return</p>
-                          </div>
-                          <div className="yearReturnNumber">
-                            <p>
-                              {`${(hedgeFund.yearOneReturn * 100 - 100).toFixed(
-                                1
-                              )}%`}
-                            </p>
-                          </div>
+                        <div className="yearReturnNumber">
+                          <p>
+                            {
+                              currentHedgeFunds[index].thirteenFs[0]
+                                .numberOfStocks
+                            }
+                          </p>
                         </div>
-                        <div className="singleReturnContainer">
-                          <div className="yearReturnLabel">
-                            <p>3 Yr Return</p>
-                          </div>
-                          <div className="yearReturnNumber">
-                            <p>
-                              {`${(
-                                hedgeFund.yearThreeReturn * 100 -
-                                100
-                              ).toFixed(1)}%`}
-                            </p>
-                          </div>
+                      </div>
+                      <div className="singleReturnContainer">
+                        <div className="yearReturnLabel">
+                          <p>1 Yr Return</p>
                         </div>
-                        <div className="singleReturnContainer">
-                          <div className="yearReturnLabel">
-                            <p>5 Yr Return</p>
-                          </div>
-                          <div className="yearReturnNumber">
-                            <p>
-                              {`${(
-                                hedgeFund.yearFiveReturn * 100 -
-                                100
-                              ).toFixed(1)}%`}
-                            </p>
-                          </div>
+                        <div className="yearReturnNumber">
+                          <p>
+                            {`${(hedgeFund.yearOneReturn * 100 - 100).toFixed(
+                              0
+                            )}%`}
+                          </p>
                         </div>
-                        <div className="singleReturnContainer">
-                          <div className="yearReturnLabel">
-                            <p>Total Return</p>
-                          </div>
-                          <div className="yearReturnNumber">
-                            <p>
-                              {`${(hedgeFund.maxReturn * 100 - 100).toFixed(
-                                1
-                              )}%`}
-                            </p>
-                          </div>
+                      </div>
+                      <div className="singleReturnContainer">
+                        <div className="yearReturnLabel">
+                          <p>3 Yr Return</p>
                         </div>
-                        <div className="singleReturnContainer">
-                          <div className="yearReturnLabel">
-                            <p>Value</p>
-                          </div>
-                          <div className="yearReturnNumber">
-                            <p>{`$${portfolioValue} ${amntIndicator}`}</p>
-                          </div>
+                        <div className="yearReturnNumber">
+                          <p>
+                            {`${(hedgeFund.yearThreeReturn * 100 - 100).toFixed(
+                              0
+                            )}%`}
+                          </p>
                         </div>
-                        <div className="singleReturnContainer">
-                          <div className="yearReturnLabel">
-                            <p>Beta</p>
-                          </div>
-                          <div className="yearReturnNumber">
-                            <p>
-                              {currentHedgeFunds[
-                                index
-                              ].thirteenFs[0].thirteenFBeta.toFixed(2)}
-                            </p>
-                          </div>
+                      </div>
+                      <div className="singleReturnContainer">
+                        <div className="yearReturnLabel">
+                          <p>5 Yr Return</p>
+                        </div>
+                        <div className="yearReturnNumber">
+                          <p>
+                            {`${(hedgeFund.yearFiveReturn * 100 - 100).toFixed(
+                              0
+                            )}%`}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="singleReturnContainer">
+                        <div className="yearReturnLabel">
+                          <p>Total Return</p>
+                        </div>
+                        <div className="yearReturnNumber">
+                          <p>
+                            {`${(
+                              Number(hedgeFund.maxReturn.slice(6)) * 100 -
+                              100
+                            ).toFixed(0)}%`}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="singleReturnContainer">
+                        <div className="yearReturnLabel">
+                          <p>Value</p>
+                        </div>
+                        <div className="yearReturnNumber">
+                          <p>{`$${portfolioValue} ${amntIndicator}`}</p>
+                        </div>
+                      </div>
+                      <div className="singleReturnContainer">
+                        <div className="yearReturnLabel">
+                          <p>Beta</p>
+                        </div>
+                        <div className="yearReturnNumber">
+                          <p>
+                            {currentHedgeFunds[
+                              index
+                            ].thirteenFs[0].thirteenFBeta.toFixed(2)}
+                          </p>
                         </div>
                       </div>
                     </div>
-                  )
-                })}
-              </div>
-              {/* <div className="pages-container">
+                  </div>
+                )
+              })}
+          </div>
+          {/* <div className="pages-container">
               <div id="page-numbers">{renderPageNumbers} </div>
             </div> */}
-              <Link
-                className="Link"
-                spy={true}
-                smooth={true}
-                offset={-30}
-                duration={700}
-                to="anchor-name"
-              />
-            </div>
-          </div>
-          <div id="right-half-hedgefunds-page"></div>
+          <Link
+            className="Link"
+            spy={true}
+            smooth={true}
+            offset={-30}
+            duration={700}
+            to="anchor-name"
+          />
         </div>
       )
     } else {

@@ -6,12 +6,6 @@ import {getHedgeFunds} from '../store/funds'
 
 export class HedgeFundStats extends React.Component {
   render() {
-    // Math.round(Number(this.props.hedgeStats.avgPortfolioAmount) / 10000) *
-    //   (10000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    // let avgPortfolio = Math.round(
-    //   parseInt(this.props.hedgeStats.avgPortfolioAmount)
-    // )
-    // console.log(avgPortfolio)
     if (!this.props.loading) {
       return (
         <div id="fundStatsWholeComponent">
@@ -34,7 +28,7 @@ export class HedgeFundStats extends React.Component {
                   <p>{`${(
                     this.props.hedgeStats.avgOneYearReturn * 100 -
                     100
-                  ).toFixed(1)}`}</p>
+                  ).toFixed(0)}%`}</p>
                 </div>
               </div>
               <div className="singleStatContainer">
@@ -45,7 +39,7 @@ export class HedgeFundStats extends React.Component {
                   <p>{`${(
                     this.props.hedgeStats.avgThreeYearReturn * 100 -
                     100
-                  ).toFixed(1)}`}</p>
+                  ).toFixed(0)}%`}</p>
                 </div>
               </div>
               <div className="singleStatContainer">
@@ -56,18 +50,18 @@ export class HedgeFundStats extends React.Component {
                   <p>{`${(
                     this.props.hedgeStats.avgFiveYearReturn * 100 -
                     100
-                  ).toFixed(1)}`}</p>
+                  ).toFixed(0)}%`}</p>
                 </div>
               </div>
               <div className="singleStatContainer">
                 <div className="yearReturnLabel">
-                  <p>Average Max Return </p>
+                  <p>Average Total Return </p>
                 </div>
                 <div className="yearReturnNumber">
                   <p>{`${(
                     this.props.hedgeStats.avgMaxReturn * 100 -
                     100
-                  ).toFixed(1)}`}</p>
+                  ).toFixed(0)}%`}</p>
                 </div>
               </div>
               <div className="singleStatContainer">
