@@ -1,6 +1,6 @@
 const axios = require('axios')
 const db = require('../server/db')
-const {HedgeFund, ThirteenF, Stock, StockStats} = require('../server/db/models')
+const {HedgeFund, ThirteenF, Stock} = require('../server/db/models')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const {
@@ -14,7 +14,7 @@ const {
   breakIntoChunks,
   getOldestYearAndQuarter,
   getCurrentYearAndQuarter,
-  getCurrentYearAndQuarterForEveryone,
+  // getCurrentYearAndQuarterForEveryone,
 } = require('./seederUtility')
 require('dotenv').config()
 
@@ -28,8 +28,8 @@ const HEDGEFUNDS = [
   'TRIAN FUND MANAGEMENT, L.P.',
   'ValueAct Holdings, L.P.',
   'DAILY JOURNAL CORP',
-  'BERKSHIRE HATHAWAY INC',
-  'BILL & MELINDA GATES FOUNDATION TRUST',
+  // 'BERKSHIRE HATHAWAY INC',
+  // 'BILL & MELINDA GATES FOUNDATION TRUST',
   // 'FAIRHOLME CAPITAL MANAGEMENT LLC',
   // 'ARIEL INVESTMENTS, LLC',
   // 'Appaloosa LP',
@@ -38,12 +38,12 @@ const HEDGEFUNDS = [
   // 'GREENLIGHT CAPITAL INC',
   // 'Pershing Square Capital Management, L.P.',
   // 'SEMPER AUGUSTUS INVESTMENTS GROUP LLC',
-  // 'WEDGEWOOD PARTNERS INC',
 ]
 // 'ATLANTIC INVESTMENT MANAGEMENT, INC.',
 // 'International Value Advisers, LLC',
+// 'WEDGEWOOD PARTNERS INC',
 
-const SIZE = String(HEDGEFUNDS.length * 5)
+const SIZE = String(HEDGEFUNDS.length * 31)
 
 const STARTING_VALUE = 10000
 
@@ -170,7 +170,7 @@ async function createStocks(createdHedgeFund, created13F, holdings) {
 
 async function buildHedgeFunds(apiKey, hedgeFundNames, size) {
   try {
-    await db.sync({force: false})
+    await db.sync({force: true})
     console.log('Database seeding!')
     const query = buildQuery(hedgeFundNames, size)
     const data = await getInitialData(apiKey, query)
@@ -428,28 +428,28 @@ async function calculateSPValue() {
   }
 }
 
-function findYearAndQuarterYearsAgo(curQuarter) {
-  let yearSubtractor
-  let quarter
-  switch (curQuarter) {
-    case 1:
-      quarter = 2
-      yearSubtractor = 1
-      return [yearSubtractor, quarter]
-    case 2:
-      quarter = 3
-      yearSubtractor = 1
-      return [yearSubtractor, quarter]
-    case 3:
-      quarter = 4
-      yearSubtractor = 1
-      return [yearSubtractor, quarter]
-    default:
-      quarter = 1
-      yearSubtractor = 0
-      return [yearSubtractor, quarter]
-  }
-}
+// function findYearAndQuarterYearsAgo(curQuarter) {
+//   let yearSubtractor
+//   let quarter
+//   switch (curQuarter) {
+//     case 1:
+//       quarter = 2
+//       yearSubtractor = 1
+//       return [yearSubtractor, quarter]
+//     case 2:
+//       quarter = 3
+//       yearSubtractor = 1
+//       return [yearSubtractor, quarter]
+//     case 3:
+//       quarter = 4
+//       yearSubtractor = 1
+//       return [yearSubtractor, quarter]
+//     default:
+//       quarter = 1
+//       yearSubtractor = 0
+//       return [yearSubtractor, quarter]
+//   }
+// }
 
 async function findThirteenF(hedgeFund, years, curYear, curQuarter) {
   const thirteenF = await ThirteenF.findOne({
