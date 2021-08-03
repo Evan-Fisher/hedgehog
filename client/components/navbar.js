@@ -52,6 +52,25 @@ function goBlackColor(el) {
   words.style.color = 'black'
 }
 
+function activate(el) {
+  console.log(el.target.style.color)
+  let newLink = document.getElementById(el.target.id)
+  let oldLink = document.getElementsByClassName('currentLink')[0]
+  if (oldLink) oldLink.classList.remove('currentLink')
+  console.log(oldLink)
+  // newLink.style.color = 'red'
+  // newLink.style.backgroundColor = 'red'
+  newLink.classList.add('currentLink')
+  // newLink.classList.add('currentLink')
+  // link.style.transform -
+  // image.classList.add('my-class')
+}
+
+// $('.button_01').on('click', function () {
+//   $('.button_01').removeClass('active')
+//   $(this).addClass('active')
+// })
+
 export const Navbar = () => (
   <div>
     <nav id="nav-bar">
@@ -68,25 +87,24 @@ export const Navbar = () => (
           alt="Turqoise Hog"
         ></img>
       </a>
-      {/* <div> */}
       <Link
         className="nav-bar-link"
         id="hedgeFundsNavLink"
         to="/hedgefunds"
         onMouseOver={(el) => getRandomColor(el)}
         onMouseOut={(el) => goBlackColor(el)}
+        onClick={(el) => activate(el)}
       >
         Hedgefunds
       </Link>
       <div className="geeks" />
-      {/* </div> */}
-      {/* <div> */}
       <Link
         className="nav-bar-link"
         id="methodologyNavLink"
         to="/methodology"
         onMouseOver={(el) => getRandomColor(el)}
         onMouseOut={(el) => goBlackColor(el)}
+        onClick={(el) => activate(el)}
       >
         Methodology
       </Link>
@@ -98,6 +116,7 @@ export const Navbar = () => (
         to="/about"
         onMouseOver={(el) => getRandomColor(el)}
         onMouseOut={(el) => goBlackColor(el)}
+        onClick={(el) => activate(el)}
       >
         About
       </Link>
