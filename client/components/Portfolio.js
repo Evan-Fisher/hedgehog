@@ -17,7 +17,6 @@ class Portfolio extends React.Component {
   render() {
     let stocks = this.props.stocks || []
     let thirteenF = this.props.thirteenF
-    console.log(stocks.length)
     let portfolioValue = thirteenF.portfolioValue
     let valueIndicator
     if (portfolioValue > 1000000000) {
@@ -119,7 +118,6 @@ class Portfolio extends React.Component {
               .sort((a, b) => b[this.state.sort] - a[this.state.sort])
               .map((stock, index) => {
                 let totalInvested = stock.totalValue
-                console.log(totalInvested)
                 let amntIndicator
                 if (totalInvested > 1000000000) {
                   totalInvested = totalInvested / 1000000000
@@ -132,14 +130,16 @@ class Portfolio extends React.Component {
                 }
                 return (
                   <div key={stock.id} className="data-container">
-                    <p id="rank">{index + 1}</p>
-                    <p id="ticker">{stock.ticker}</p>
-                    <p id="percentage">{`${(
+                    <p id="pRank">{index + 1}</p>
+                    <p id="pTicker">{stock.ticker}</p>
+                    <p id="pPercentage">{`${(
                       Number(stock.percentageOfPortfolio) * 100
                     ).toFixed(2)}%`}</p>
-                    <p id="invested">{`$${totalInvested} ${amntIndicator}`}</p>
-                    <p id="invested">{`$${stock.price}`}</p>
-                    <p id="invested">{`${stock.qtyOfSharesHeld}`}</p>
+                    <p id="pInvested">{`$${totalInvested} ${amntIndicator}`}</p>
+                    <p id="pPrice">{`$${stock.price}`}</p>
+                    <p id="pShares">{`${numberWithCommas(
+                      stock.qtyOfSharesHeld
+                    )}`}</p>
                   </div>
                 )
               })}
@@ -170,4 +170,8 @@ function quarterEndDate(year, quarter) {
     default:
       return `${year}-12-31`
   }
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
